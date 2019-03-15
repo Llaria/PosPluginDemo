@@ -7,32 +7,36 @@ android {
         applicationId "sun.sundy.pospluginone"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 1
+        versionCode 100
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
 
+    signingConfigs {
+        releaseSign {
+            keyAlias 'debugkey'
+            keyPassword '123456'
+            storeFile file('debug.jks')
+            storePassword '123456'
+        }
+        debugSign {
+            keyAlias 'debugkey'
+            keyPassword '123456'
+            storeFile file('debug.jks')
+            storePassword '123456'
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.releaseSign
         }
     }
 
-}
-
-
-apply plugin: 'replugin-plugin-gradle'
-
-/***
- * plugin配置
- */
-repluginPluginConfig {
-    pluginName = "pluginone"
-    hostApplicationId = "sun.sundy.posplugindemo"
-    hostAppLauncherActivity = "sun.sundy.posplugindemo.MainActivity"
 }
 
 dependencies {
@@ -44,4 +48,15 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.qihoo360.replugin:replugin-plugin-lib:2.3.1'
+}
+
+apply plugin: 'replugin-plugin-gradle'
+
+/***
+ * plugin配置
+ */
+repluginPluginConfig {
+    pluginName = "pospluginone-debug"
+    hostApplicationId = "sun.sundy.posplugindemo"
+    hostAppLauncherActivity = "sun.sundy.posplugindemo.MainActivity"
 }
